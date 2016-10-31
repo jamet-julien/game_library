@@ -1,5 +1,6 @@
-var path = require('path');
-var root = path.resolve( __dirname);
+var path    = require('path');
+var root    = path.resolve( __dirname);
+var webpack = require('webpack');
 
 module.exports = {
 
@@ -24,6 +25,12 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+
+  plugins :[
+    new webpack.optimize.UglifyJsPlugin({
+      comments : false
+    })
+  ]
 
 };
