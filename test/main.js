@@ -21,6 +21,11 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
     oSprite       = new Sprite( oSpritesheet, 10),
     oSprite2      = new Sprite( oSpritesheet2, 5),
     oSprite3      = new Sprite( oSpritesheet, 1),
+
+    oLocation     = new Vector( 0, 0),
+    oVelocity     = new Vector( 3, 0),
+    oAcceleration = new Vector( 0, 0),
+    
     oPhase        = new Phase('setup');
 
 /***********************************************
@@ -36,8 +41,8 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
 
         setup : function( iTime){
 
-          BACKGROUND.init();
           GAME.init();
+          BACKGROUND.init();
           FOREGROUND.init();
 
           Timer.restart();
@@ -47,12 +52,23 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
 
         draw : function( iTime ){
 
+          oVelocity.add( oAcceleration);
+          oLocation.add( oVelocity);
+
           GAME.clear();
           BACKGROUND.clear();
           FOREGROUND.clear();
 
-          oSprite.draw( BACKGROUND, 32, 32, [1, 2, 3, 4]);
-          oSprite2.draw( GAME, 32, 66, [1, 2, 3, 4]);
+          if( oLocation.x > GAME.width){
+            oLocation.x = 0;
+          }
+
+          if( oLocation.y > GAME.height){
+            oLocation.y = 0;
+          }
+
+          oSprite.rotAnim( BACKGROUND, 32, 32, 45,[1, 2, 3, 4]);
+          oSprite2.draw( GAME, oLocation.x, oLocation.y, [1, 2, 3, 4]);
           oSprite3.draw( FOREGROUND, 32, 99,[1, 2, 3, 4]);
 
         }

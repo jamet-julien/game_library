@@ -26,7 +26,7 @@ class Canvas {
     this.context = this.canvas.getContext('2d');
 
     this.canvas.setAttribute('width', this.width);
-    this.canvas.setAttribute('height', this.width);
+    this.canvas.setAttribute('height', this.height);
 
     this.canvas.style.width  = this.width + 'px';
     this.canvas.style.height = this.height + 'px';
@@ -43,7 +43,7 @@ class Canvas {
   /**
    *
    */
-  draw( ...args){
+  drawImage( ...args){
 
     this.context.drawImage.apply( this.context, args);
     // list args : image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight
@@ -58,7 +58,7 @@ class Canvas {
     this.context.save();
     this.context.translate( iX,  iY);
     this.context.rotate( iAngle * this.TO_RADIANS);
-    this.draw(
+    this.drawImage(
             oImage,
            -( iWidth / 2),
            -( iHeight / 2)
@@ -80,7 +80,7 @@ class Canvas {
 
     this.context.rotate( iAngle * this.TO_RADIANS);
 
-    this.draw(
+    this.drawImage(
         oImage,//
         aCoor[0] * iWidth,//
         aCoor[1] * iHeight,//

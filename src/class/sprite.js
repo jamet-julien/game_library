@@ -78,14 +78,13 @@ class Sprite{
   draw( oCtx,  iX, iY, mVarious){
 
     let aRes = [],
-        iCurrentFrame,
-        oAnimCurrent;
+        iCurrentFrame;
 
     if( Number.isInteger( mVarious)){
 
       aRes = indexToXY( Math.abs( mVarious), this.grid);
 
-      oCtx.draw(
+      oCtx.drawImage(
           this.image,
           aRes[0] * this.width,
           aRes[1] * this.height,
@@ -101,7 +100,7 @@ class Sprite{
 
       aRes = indexToXY( Math.abs( iCurrentFrame), this.grid);
 
-      oCtx.draw(
+      oCtx.drawImage(
           this.image,
           aRes[0] * this.width,
           aRes[1] * this.height,
@@ -112,7 +111,7 @@ class Sprite{
       );
 
     }else{
-      oCtx.draw( this.image, iX, iY, this.width, this.height);
+      oCtx.drawImage( this.image, iX, iY, this.width, this.height);
     }
 
   }
