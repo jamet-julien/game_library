@@ -10,6 +10,7 @@
 var BACKGROUND    = new Canvas( "background", 640, 480 ),
     GAME          = new Canvas( "game", 640, 480 ),
     FOREGROUND    = new Canvas( "foreground", 640, 480 ),
+
     oSpritesheet  = Spritesheet.getInstance(
         "./img/dog.png",
         { grid : 8, width : 32, height: 32}
@@ -18,15 +19,20 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
         "./img/dog.png",
         { grid : 8, width : 32, height: 32}
     ),
-    oSprite       = new Sprite( oSpritesheet, 10),
-    oSprite2      = new Sprite( oSpritesheet2, 5),
-    oSprite3      = new Sprite( oSpritesheet, 1),
 
-    oLocation     = new Vector( 0, 0),
-    oVelocity     = new Vector( 3, 0),
-    oAcceleration = new Vector( 0, 0),
-    
-    oPhase        = new Phase('setup');
+    oSprite        = new Sprite( oSpritesheet, 10),
+    oSprite2       = new Sprite( oSpritesheet2, 5),
+    oSprite3       = new Sprite( oSpritesheet, 1),
+
+    oPosition1     = new Vector( 0, 0),
+    oVelocity1     = new Vector( 3, 0),
+    oAcceleration1 = new Vector( 0.01, 0),
+
+    oPosition2     = new Vector( 10, 0),
+    oVelocity2     = new Vector( 4, 0),
+    oAcceleration2 = new Vector( 0, 0),
+
+    oPhase         = new Phase('setup');
 
 /***********************************************
   ____  _____ _____ _   _ ____
@@ -52,24 +58,25 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
 
         draw : function( iTime ){
 
-          oVelocity.add( oAcceleration);
-          oLocation.add( oVelocity);
+          oVelocity1.add( oAcceleration1);
+          oPosition1.add( oVelocity1);
+
+          oVelocity2.add( oAcceleration2);
+          oPosition2.add( oVelocity2);
 
           GAME.clear();
           BACKGROUND.clear();
           FOREGROUND.clear();
 
-          if( oLocation.x > GAME.width){
-            oLocation.x = 0;
-          }
+          oPosition1.x %= GAME.width;
+          oPosition1.y %= GAME.height;
 
-          if( oLocation.y > GAME.height){
-            oLocation.y = 0;
-          }
+          oPosition2.x %= GAME.width;
+          oPosition2.y %= GAME.height;
 
           oSprite.rotAnim( BACKGROUND, 32, 32, 45,[1, 2, 3, 4]);
-          oSprite2.draw( GAME, oLocation.x, oLocation.y, [1, 2, 3, 4]);
-          oSprite3.draw( FOREGROUND, 32, 99,[1, 2, 3, 4]);
+          oSprite2.draw( GAME, oPosition1.x, oPosition1.y, [1, 2, 3, 4]);
+          oSprite3.draw( FOREGROUND, oPosition2.x, oPosition2.y,[1, 2, 3, 4]);
 
         }
     });
