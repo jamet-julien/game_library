@@ -4,6 +4,7 @@ import Sprite      from '../class/sprite.js';
 import Phase       from '../class/phase.js';
 import Timer       from '../class/timer.js';
 import Vector      from '../class/vector.js';
+import Effect      from '../class/effect.js';
 
 
 (function( context){
@@ -13,6 +14,7 @@ import Vector      from '../class/vector.js';
     context.Sprite      = Sprite;
     context.Phase       = Phase;
     context.Timer       = Timer;
+    context.Effect      = Effect;
     context.Vector      = Vector;
 
 })(window);

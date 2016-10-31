@@ -14,7 +14,6 @@ class Canvas {
 
     this.canvas   = null;
     this.context  = null;
-
   }
 
   /**
@@ -47,6 +46,22 @@ class Canvas {
 
     this.context.drawImage.apply( this.context, args);
     // list args : image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight
+  }
+
+  /**
+   *
+   */
+  getPixel(){
+    let oImageData = this.context.getImageData(0, 0, this.width, this.height);
+    return oImageData;
+  }
+
+  /**
+   *
+   */
+  setPixel( oImageData){
+    this.context.putImageData( oImageData, 0, 0);
+    return this;
   }
 
 

@@ -32,6 +32,11 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
     oVelocity2     = new Vector( 4, 0),
     oAcceleration2 = new Vector( 0, 0),
 
+    oEffect         = new Effect( function( R, G, B, A){
+
+        return [ 255, 0, 0, A];
+    }),
+
     oPhase         = new Phase('setup');
 
 /***********************************************
@@ -78,6 +83,8 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
           oSprite2.draw( GAME, oPosition1.x, oPosition1.y, [1, 2, 3, 4]);
           oSprite3.draw( FOREGROUND, oPosition2.x, oPosition2.y,[1, 2, 3, 4]);
 
+
+          oEffect.apply( GAME);
         }
     });
 
