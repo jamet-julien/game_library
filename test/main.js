@@ -33,8 +33,7 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
     oAcceleration2 = new Vector( 0, 0),
 
     oEffect         = new Effect( function( R, G, B, A){
-
-        return [ 255, 0, 0, A];
+        return ( this.y % 2 === 0)? [ R, G, B, A] : [255, 0, 0, A];
     }),
 
     oPhase         = new Phase('setup');
@@ -84,7 +83,7 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
           oSprite3.draw( FOREGROUND, oPosition2.x, oPosition2.y,[1, 2, 3, 4]);
 
 
-          oEffect.apply( GAME);
+          oEffect.apply( FOREGROUND);
         }
     });
 
