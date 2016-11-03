@@ -1,3 +1,7 @@
+function radToDeg( iAngle){
+  return ( iAngle * 180)/Math.PI;
+}
+
 
 
 class Vector{
@@ -33,26 +37,35 @@ class Vector{
   /**
    *
    */
-  getAngle( oVector){
-
-    var hypCur       = this.mag(),
-        hypVec       = oVector.mag(),
-        proScallaire = ( this.x * oVector.x) + ( this.y * oVector.y),
-        cos          = proScallaire / ( hypCur * hypVec),
-        angle        = Math.acos(  cos),
-        angleDeg     = ( angle * 180)/Math.PI;
-
-    return angleDeg;
-  }
-
-  /**
-   *
-   */
   multi( iMult){
     this.x *= iMult;
     this.y *= iMult;
 
     return this;
+  }
+
+  /**
+   *
+   */
+  heading(){
+    var iAngleR = Math.atan2( this.y, this.x);
+    return radToDeg( iAngleR);
+  }
+
+
+  /**
+   *
+   */
+  rotate( iAngle) {
+
+    var iHeading = this.heading() + iAngle,
+        iMag     = this.mag();
+
+    this.x = Math.cos( iHeading) * iMag;
+    this.y = Math.sin( iHeading) * iMag;
+
+    return this;
+
   }
 
   /**

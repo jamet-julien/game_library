@@ -97,8 +97,10 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
           velocity.add( acceleration);
           position.add( velocity);
           velocity.limit( 5);
+          
+          angle = oMouse.heading();
 
-          oBall.draw( GAME, position.x - 16, position.y - 16, [0]);
+          oBall.rotAnim( GAME, position.x - 16, position.y - 16, angle - 225, [0]);
 
 
           oMouse  = new Vector( mouseX, mouseY);
@@ -112,9 +114,9 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
           position2.add( velocity2);
           velocity2.limit( 5);
 
-          angle = position2.getAngle( oMouse);
+          angle = oMouse.heading();
 
-          oBall2.rotAnim( GAME, position2.x - 16, position2.y - 16, angle - 135, [1]);
+          oBall2.rotAnim( GAME, position2.x - 16, position2.y - 16, angle - 225, [1]);
 
           //oEffect.apply( FOREGROUND);// WARNING LAG
         }

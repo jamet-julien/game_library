@@ -1,8 +1,11 @@
+body{
+     background: #000;
+}
+
 .space{
     position : absolute;
     top      : 0;
     left     : 0;
     right    : 0;
     margin   : 0 auto;
-    border   : 1px solid red;
 }
