@@ -59,7 +59,7 @@ class Vector{
   set angle( iAngle) {
 
     var iHeading = this.angle + iAngle,
-        iMag     = this.mag();
+        iMag     = this.magnetude;
 
     this.x = Math.cos( iHeading) * iMag;
     this.y = Math.sin( iHeading) * iMag;
@@ -81,14 +81,14 @@ class Vector{
   /**
    *
    */
-  setMag( iMag){
+  set magnetude( iMag){
     return this.normalize().multi( iMag);
   }
 
   /**
    *
    */
-  mag(){
+  get magnetude(){
     return Math.sqrt( ( this.x*this.x) + ( this.y*this.y));
   }
 
@@ -96,10 +96,10 @@ class Vector{
    *
    **/
   limit( iMag){
-    var iMagCurrent = this.mag();
+    var iMagCurrent = this.magnetude;
 
     if( iMagCurrent > iMag){
-        this.setMag( iMag);
+        this.magnetude = iMag
     }
 
     return this
@@ -110,7 +110,7 @@ class Vector{
    *
    */
   normalize(){
-      return ( this.mag() === 0 )? this : this.div( this.mag());
+      return ( this.magnetude === 0 )? this : this.div( this.magnetude);
   }
 
 

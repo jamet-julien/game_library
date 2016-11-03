@@ -91,7 +91,7 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
           FOREGROUND.clear();
           oMouse  = new Vector( mouseX, mouseY);
           oMouse.sub( position);
-          oMouse.setMag( 0.1);
+          oMouse.magnetude =  0.1;
 
           acceleration = oMouse;
 
@@ -107,7 +107,7 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
           oMouse  = new Vector( mouseX, mouseY);
           oMouse.sub( position2);
 
-          oMouse.setMag( 0.2);
+          oMouse.magnetude =  0.2;
 
           acceleration2 = oMouse;
 
