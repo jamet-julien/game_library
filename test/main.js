@@ -39,16 +39,21 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
 
     oSpriteBall = Spritesheet.getInstance(
         "./img/balle.png",
-        { grid : 1, width : 32, height: 32}
+        { grid : 2, width : 32, height: 32}
     ),
 
     oBall          = new Sprite( oSpriteBall),
+    oBall2         = new Sprite( oSpriteBall),
 
-    position       = new Vector( GAME.width/2, GAME.height/2),
+    position       = new Vector( GAME.width/3, GAME.height/3),
     velocity       = new Vector( 0, 0),
     acceleration   = new Vector( 0, 0),
 
-    oMouse         = new Vector( 0, 0),
+    position2       = new Vector( GAME.width/6, GAME.height/6),
+    velocity2       = new Vector( 0, 0),
+    acceleration2   = new Vector( 0, 0),
+
+    oMouse         = new Vector( GAME.width/2, GAME.height/2),
 
     oEffect        = new Effect( function( R, G, B, A){
 
@@ -81,19 +86,31 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
 
         draw : function( iTime ){
 
+          GAME.clear();
           oMouse  = new Vector( mouseX, mouseY);
           oMouse.sub( position);
-          oMouse.setMag( 0.2);
+          oMouse.setMag( 0.1);
 
           acceleration = oMouse;
 
           velocity.add( acceleration);
           position.add( velocity);
-          velocity.limit(5);
+          velocity.limit( 5);
 
-          GAME.clear();
-          oBall.draw( GAME, position.x - 16, position.y - 16);
+          oBall.draw( GAME, position.x - 16, position.y - 16, [0]);
 
+
+          oMouse  = new Vector( mouseX, mouseY);
+          oMouse.sub( position2);
+          oMouse.setMag( 0.2);
+
+          acceleration2 = oMouse;
+
+          velocity2.add( acceleration2);
+          position2.add( velocity2);
+          velocity2.limit( 5);
+
+          oBall2.draw( GAME, position2.x - 16, position2.y - 16,[1]);
 
           //oEffect.apply( FOREGROUND);// WARNING LAG
         }
