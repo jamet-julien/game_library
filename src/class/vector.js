@@ -47,7 +47,7 @@ class Vector{
   /**
    *
    */
-  heading(){
+  get angle(){
     var iAngleR = Math.atan2( this.y, this.x);
     return radToDeg( iAngleR);
   }
@@ -56,9 +56,9 @@ class Vector{
   /**
    *
    */
-  rotate( iAngle) {
+  set angle( iAngle) {
 
-    var iHeading = this.heading() + iAngle,
+    var iHeading = this.angle + iAngle,
         iMag     = this.mag();
 
     this.x = Math.cos( iHeading) * iMag;
