@@ -54,7 +54,7 @@ class Sprite{
     this.is_pattern      = false;
     this.pattern         = null;
     this.pattern_x_times = 0;
-    this.cadence         = ( iCadence)? iCadence : 3;
+    this.cadence         = iCadence || 3;
 
     this._tmp            = {};
     this.anim            = new Animate( 0, 0, 0);

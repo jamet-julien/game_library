@@ -11,28 +11,47 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
     GAME          = new Canvas( "game", 640, 480 ),
     FOREGROUND    = new Canvas( "foreground", 640, 480 ),
 
+    mouseX = 0,
+    mouseY = 0,
+
+    /*
+
     oSpritesheet  = Spritesheet.getInstance(
-        "./img/dog.png",
-        { grid : 8, width : 32, height: 32}
+      "./img/dog.png",
+      { grid : 8, width : 32, height: 32}
     ),
-    oSpritesheet2 = Spritesheet.getInstance(
-        "./img/dog.png",
-        { grid : 8, width : 32, height: 32}
-    ),
-
     oSprite        = new Sprite( oSpritesheet, 10),
-    oSprite2       = new Sprite( oSpritesheet2, 5),
-    oSprite3       = new Sprite( oSpritesheet, 1),
-
     oPosition1     = new Vector( 0, 0),
     oVelocity1     = new Vector( 3, 0),
     oAcceleration1 = new Vector( 0.01, 0),
 
+    oSpritesheet2 = Spritesheet.getInstance(
+      "./img/dog.png",
+      { grid : 8, width : 32, height: 32}
+    ),
+    oSprite2       = new Sprite( oSpritesheet2, 5),
     oPosition2     = new Vector( 10, 0),
     oVelocity2     = new Vector( 4, 0),
     oAcceleration2 = new Vector( 0, 0),
 
-    oEffect         = new Effect( function( R, G, B, A){
+    oSprite3       = new Sprite( oSpritesheet, 1),
+    */
+
+    oSpriteBall = Spritesheet.getInstance(
+        "./img/balle.png",
+        { grid : 1, width : 32, height: 32}
+    ),
+
+    oBall          = new Sprite( oSpriteBall),
+
+    position       = new Vector( GAME.width/2, GAME.height/2),
+    velocity       = new Vector( 0, 0),
+    acceleration   = new Vector( 0, 0),
+
+    oMouse         = new Vector( 0, 0),
+
+    oEffect        = new Effect( function( R, G, B, A){
+
         return ( this.y % 2 === 0)? [ R, G, B, A] : [255, 0, 0, A];
     }),
 
@@ -51,8 +70,8 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
 
         setup : function( iTime){
 
-          GAME.init();
           BACKGROUND.init();
+          GAME.init();
           FOREGROUND.init();
 
           Timer.restart();
@@ -62,32 +81,25 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
 
         draw : function( iTime ){
 
-          oVelocity1.add( oAcceleration1);
-          oPosition1.add( oVelocity1);
+          oMouse  = new Vector( mouseX, mouseY);
+          oMouse.sub( position);
+          oMouse.setMag( 0.2);
 
-          oVelocity2.add( oAcceleration2);
-          oPosition2.add( oVelocity2);
+          acceleration = oMouse;
+
+          velocity.add( acceleration);
+          position.add( velocity);
+          velocity.limit(5);
 
           GAME.clear();
-          BACKGROUND.clear();
-          FOREGROUND.clear();
-
-          oPosition1.x %= GAME.width;
-          oPosition1.y %= GAME.height;
-
-          oPosition2.x %= GAME.width;
-          oPosition2.y %= GAME.height;
-
-          oSprite.rotAnim( BACKGROUND, 32, 32, 45,[1, 2, 3, 4]);
-          oSprite2.draw( GAME, oPosition1.x, oPosition1.y, [1, 2, 3, 4]);
-          oSprite3.draw( FOREGROUND, oPosition2.x, oPosition2.y,[1, 2, 3, 4]);
+          oBall.draw( GAME, position.x - 16, position.y - 16);
 
 
-          oEffect.apply( FOREGROUND);
+          //oEffect.apply( FOREGROUND);// WARNING LAG
         }
     });
 
-Timer.setCadence( 24)
+Timer.setCadence( 1)
      .run( ( iTime) => {
         oPhase.run( iTime);
       }).play();
@@ -100,7 +112,10 @@ Timer.setCadence( 24)
  |____/ |_/_/   \_\_| \_\|_|
 
 ****************************************/
-
+document.getElementById('foreground').addEventListener("mousemove", function( e){
+  mouseX = e.pageX - this.offsetLeft;
+  mouseY = e.pageY - this.offsetTop;
+});
 
 document.onreadystatechange=function () {
 

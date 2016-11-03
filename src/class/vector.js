@@ -23,6 +23,16 @@ class Vector{
   /**
    *
    */
+  sub( oVector){
+      this.x -= oVector.x;
+      this.y -= oVector.y;
+
+      return this;
+  }
+
+  /**
+   *
+   */
   multi( iMult){
     this.x *= iMult;
     this.y *= iMult;
@@ -41,7 +51,7 @@ class Vector{
   }
 
   /**
-   * 
+   *
    */
   setMag( iMag){
     return this.normalize().multi( iMag);
@@ -52,6 +62,20 @@ class Vector{
    */
   mag(){
     return Math.sqrt( ( this.x*this.x) + ( this.y*this.y));
+  }
+
+  /**
+   *
+   **/
+  limit( iMag){
+    var iMagCurrent = this.mag();
+
+    if( iMagCurrent > iMag){
+        this.setMag( iMag);
+    }
+
+    return this
+
   }
 
   /**
