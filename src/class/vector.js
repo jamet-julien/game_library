@@ -33,6 +33,21 @@ class Vector{
   /**
    *
    */
+  getAngle( oVector){
+
+    var hypCur       = this.mag(),
+        hypVec       = oVector.mag(),
+        proScallaire = ( this.x * oVector.x) + ( this.y * oVector.y),
+        cos          = proScallaire / ( hypCur * hypVec),
+        angle        = Math.acos(  cos),
+        angleDeg     = ( angle * 180)/Math.PI;
+
+    return angleDeg;
+  }
+
+  /**
+   *
+   */
   multi( iMult){
     this.x *= iMult;
     this.y *= iMult;
