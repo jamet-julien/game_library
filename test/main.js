@@ -50,6 +50,8 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
     velocity       = new Vector( 0, 0),
     acceleration   = new Vector( 0, 0),
 
+    oGeometry       = null,
+
     position2       = new Vector( GAME.width/6, GAME.height/6),
     velocity2       = new Vector( 0, 0),
     acceleration2   = new Vector( 0, 0),
@@ -80,6 +82,10 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
           GAME.init();
           FOREGROUND.init();
 
+          oGeometry = new Geometry( FOREGROUND);
+
+
+
           Timer.restart();
           this.setPhase( 'draw');
 
@@ -87,13 +93,27 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
 
         draw : function( iTime ){
 
+          BACKGROUND.clear();
           GAME.clear();
           FOREGROUND.clear();
+
+          oGeometry.rectangle(10, 10, 150, 150)
+                   .stroke( 'green', 5)
+                   .fill( 'red');
+
+         oGeometry.rectangle(100, 100, 150, 150)
+                  .stroke( 'green', 5);
+
+        oGeometry.polygon([[150, 150], [200, 150], [175, 200]])
+                 .stroke( 'yellow', 5).fill( 'orange');
+
+
           oMouse  = new Vector( mouseX, mouseY);
           oMouse.sub( position);
           oMouse.magnetude =  0.1;
 
           acceleration = oMouse;
+
 
           velocity.add( acceleration);
           position.add( velocity);
@@ -102,7 +122,6 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
           angle = oMouse.angle;
 
           oBall.rotAnim( GAME, position.x - 16, position.y - 16, angle - 225, [0]);
-
 
           oMouse  = new Vector( mouseX, mouseY);
           oMouse.sub( position2);

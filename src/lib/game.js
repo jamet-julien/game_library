@@ -5,6 +5,7 @@ import Phase       from '../class/phase.js';
 import Timer       from '../class/timer.js';
 import Vector      from '../class/vector.js';
 import Effect      from '../class/effect.js';
+import Geometry    from '../class/geometry.js';
 
 
 (function( context){
@@ -16,5 +17,6 @@ import Effect      from '../class/effect.js';
     context.Timer       = Timer;
     context.Effect      = Effect;
     context.Vector      = Vector;
+    context.Geometry    = Geometry;
 
 })(window);
