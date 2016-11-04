@@ -45,6 +45,17 @@ class Geometry{
   }
 
   /**
+   *
+   */
+  pattern( oSprite , _sMode){
+
+    var sMode  = _sMode|| "repeat",
+        mValue = this.context.createPattern( oSprite.image, sMode);
+
+    return this.fill( mValue);
+  }
+
+  /**
    * [fillStyle description]
    * @param  {[type]} mValue [description]
    * @return {[type]}        [description]
@@ -112,6 +123,24 @@ class Geometry{
     this.closePath();
 
     return this;
+  }
+
+
+  /**
+   *
+   */
+  line( iX, iY, iX2, iY2){
+
+    this.beginPath()
+        .moveTo( iX, iY)
+        .lineTo( iX2, iY2);
+
+    this.closePath();
+
+    this.stroke( '#000', 1);
+
+    return this;
+
   }
 
   /**

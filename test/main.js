@@ -51,6 +51,7 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
     acceleration   = new Vector( 0, 0),
 
     oGeometry       = null,
+    bClick          = false,
 
     position2       = new Vector( GAME.width/6, GAME.height/6),
     velocity2       = new Vector( 0, 0),
@@ -82,7 +83,7 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
           GAME.init();
           FOREGROUND.init();
 
-          oGeometry = new Geometry( FOREGROUND);
+          oGeometry = new Geometry( BACKGROUND);
 
 
 
@@ -93,19 +94,9 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
 
         draw : function( iTime ){
 
-          BACKGROUND.clear();
+          //BACKGROUND.clear();
           GAME.clear();
           FOREGROUND.clear();
-
-          oGeometry.rectangle(10, 10, 150, 150)
-                   .stroke( 'green', 5)
-                   .fill( 'red');
-
-         oGeometry.rectangle(100, 100, 150, 150)
-                  .stroke( 'green', 5);
-
-        oGeometry.polygon([[150, 150], [200, 150], [175, 200]])
-                 .stroke( 'yellow', 5).fill( 'orange');
 
 
           oMouse  = new Vector( mouseX, mouseY);
@@ -138,6 +129,10 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
 
           oBall2.rotAnim( FOREGROUND, position2.x - 16, position2.y - 16, angle - 225, [1]);
 
+          if( bClick){
+            oGeometry.circle( position.x, position.y, 16)
+                     .pattern( oSpriteBall);
+          }
           //oEffect.apply( FOREGROUND);// WARNING LAG
         }
     });
@@ -158,6 +153,10 @@ Timer.setCadence( 10)
 document.getElementById('foreground').addEventListener("mousemove", function( e){
   mouseX = e.pageX - this.offsetLeft;
   mouseY = e.pageY - this.offsetTop;
+});
+
+document.getElementById('foreground').addEventListener("mousedown", function( e){
+    bClick = !bClick;
 });
 
 document.onreadystatechange=function () {

@@ -8,9 +8,9 @@ class Spritesheet {
 
       this.image.addEventListener('load', ()=>{});
 
-      this.grid   = ( grid)?   grid   : 1;
-      this.width  = ( width)?  width  : 32;
-      this.height = ( height)? height : 32;
+      this.grid   = grid   || 1;
+      this.width  = width  || 32;
+      this.height = height || 32;
 
   }
 

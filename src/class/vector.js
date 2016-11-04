@@ -122,6 +122,45 @@ class Vector{
   }
 
 
+  /**
+   *
+   */
+  static div( oVec1, mValue){
+    var target = oVec1.copy();
+    target.div( mValue);
+    return target;
+  }
+
+  /**
+   *
+   */
+  static mult( oVec1, mValue){
+    var target = oVec1.copy();
+    target.mult( mValue);
+    return target;
+  }
+
+
+  /**
+   *
+   */
+  static sub( oVec1, oVec2){
+    var target = oVec1.copy();
+    target.sub( oVec2);
+    return target;
+  }
+
+  /**
+   *
+   */
+  static add( oVec1, oVec2){
+    var target = oVec1.copy();
+    target.add( oVec2);
+    return target;
+  }
+
+
+
 }
 
 

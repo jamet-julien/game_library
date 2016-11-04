@@ -6,6 +6,7 @@ import Timer       from '../class/timer.js';
 import Vector      from '../class/vector.js';
 import Effect      from '../class/effect.js';
 import Geometry    from '../class/geometry.js';
+import {contrain, map}  from './utility.js';
 
 
 (function( context){
@@ -18,5 +19,7 @@ import Geometry    from '../class/geometry.js';
     context.Effect      = Effect;
     context.Vector      = Vector;
     context.Geometry    = Geometry;
+    context.contrain    = contrain;
+    context.map         = map;
 
 })(window);
