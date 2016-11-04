@@ -6,6 +6,7 @@ import Timer       from '../class/timer.js';
 import Vector      from '../class/vector.js';
 import Effect      from '../class/effect.js';
 import Geometry    from '../class/geometry.js';
+import Perlin      from '../class/Perlin.js';
 import {contrain, map}  from './utility.js';
 
 
@@ -19,6 +20,7 @@ import {contrain, map}  from './utility.js';
     context.Effect      = Effect;
     context.Vector      = Vector;
     context.Geometry    = Geometry;
+    context.Perlin      = Perlin;
     context.contrain    = contrain;
     context.map         = map;
 

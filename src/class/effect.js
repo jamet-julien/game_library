@@ -43,7 +43,9 @@ class Effect{
       oImageData.data.set( aResult, j);
 
     }
+
     oCtx.setPixel( oImageData);
+
   }
 
 

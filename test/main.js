@@ -10,33 +10,12 @@
 var BACKGROUND    = new Canvas( "background", 640, 480 ),
     GAME          = new Canvas( "game", 640, 480 ),
     FOREGROUND    = new Canvas( "foreground", 640, 480 ),
+    oGeometry       = null,
 
+/*
     angle = 0,
     mouseX = 0,
     mouseY = 0,
-
-    /*
-
-    oSpritesheet  = Spritesheet.getInstance(
-      "./img/dog.png",
-      { grid : 8, width : 32, height: 32}
-    ),
-    oSprite        = new Sprite( oSpritesheet, 10),
-    oPosition1     = new Vector( 0, 0),
-    oVelocity1     = new Vector( 3, 0),
-    oAcceleration1 = new Vector( 0.01, 0),
-
-    oSpritesheet2 = Spritesheet.getInstance(
-      "./img/dog.png",
-      { grid : 8, width : 32, height: 32}
-    ),
-    oSprite2       = new Sprite( oSpritesheet2, 5),
-    oPosition2     = new Vector( 10, 0),
-    oVelocity2     = new Vector( 4, 0),
-    oAcceleration2 = new Vector( 0, 0),
-
-    oSprite3       = new Sprite( oSpritesheet, 1),
-    */
 
     oSpriteBall = Spritesheet.getInstance(
         "./img/balle.png",
@@ -50,7 +29,6 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
     velocity       = new Vector( 0, 0),
     acceleration   = new Vector( 0, 0),
 
-    oGeometry       = null,
     bClick          = false,
 
     position2       = new Vector( GAME.width/6, GAME.height/6),
@@ -58,10 +36,13 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
     acceleration2   = new Vector( 0, 0),
 
     oMouse         = new Vector( GAME.width/2, GAME.height/2),
+*/
+    oNoise        = new Effect( function( R, G, B, A){
 
-    oEffect        = new Effect( function( R, G, B, A){
+        var iValue = Perlin.value( this.x ,this.y),
+            iColor = map( iValue, 0, 1, 0, 255);
 
-        return ( this.y % 2 === 0)? [ R, G, B, A] : [255, 0, 0, A];
+        return [ iColor, iColor, iColor, 255];
     }),
 
     oPhase         = new Phase('setup');
@@ -74,6 +55,7 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
  |____/|_____| |_|  \___/|_|
 
  ***********************************************/
+Perlin.resolution = 100;
 
     oPhase.computePhase({
 
@@ -83,57 +65,21 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
           GAME.init();
           FOREGROUND.init();
 
-          oGeometry = new Geometry( BACKGROUND);
-
-
-
           Timer.restart();
+
           this.setPhase( 'draw');
+
+
 
         },
 
         draw : function( iTime ){
 
-          //BACKGROUND.clear();
-          GAME.clear();
           FOREGROUND.clear();
+          oNoise.apply( FOREGROUND);
 
 
-          oMouse  = new Vector( mouseX, mouseY);
-          oMouse.sub( position);
-          oMouse.magnetude =  0.1;
 
-          acceleration = oMouse;
-
-
-          velocity.add( acceleration);
-          position.add( velocity);
-          velocity.limit( 5);
-
-          angle = oMouse.angle;
-
-          oBall.rotAnim( GAME, position.x - 16, position.y - 16, angle - 225, [0]);
-
-          oMouse  = new Vector( mouseX, mouseY);
-          oMouse.sub( position2);
-
-          oMouse.magnetude =  0.2;
-
-          acceleration2 = oMouse;
-
-          velocity2.add( acceleration2);
-          position2.add( velocity2);
-          velocity2.limit( 5);
-
-          angle = oMouse.angle;
-
-          oBall2.rotAnim( FOREGROUND, position2.x - 16, position2.y - 16, angle - 225, [1]);
-
-          if( bClick){
-            oGeometry.circle( position.x, position.y, 16)
-                     .pattern( oSpriteBall);
-          }
-          //oEffect.apply( FOREGROUND);// WARNING LAG
         }
     });
 
@@ -153,10 +99,6 @@ Timer.setCadence( 10)
 document.getElementById('foreground').addEventListener("mousemove", function( e){
   mouseX = e.pageX - this.offsetLeft;
   mouseY = e.pageY - this.offsetTop;
-});
-
-document.getElementById('foreground').addEventListener("mousedown", function( e){
-    bClick = !bClick;
 });
 
 document.onreadystatechange=function () {
