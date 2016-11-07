@@ -37,7 +37,7 @@ class Vector{
   /**
    *
    */
-  multi( iMult){
+  mult( iMult){
     this.x *= iMult;
     this.y *= iMult;
 
@@ -82,7 +82,7 @@ class Vector{
    *
    */
   set magnetude( iMag){
-    return this.normalize().multi( iMag);
+    return this.normalize().mult( iMag);
   }
 
   /**

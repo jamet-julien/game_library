@@ -32,8 +32,7 @@ class Effect{
         this.x = x;
         this.y = y;
 
-        aResult = this.callBack.call(
-                    this,
+        aResult = this.callBack(
                     oImageData.data[ j + 0],//R
                     oImageData.data[ j + 1],//V
                     oImageData.data[ j + 2],//B

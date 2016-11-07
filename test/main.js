@@ -10,10 +10,9 @@
 var BACKGROUND    = new Canvas( "background", 640, 480 ),
     GAME          = new Canvas( "game", 640, 480 ),
     FOREGROUND    = new Canvas( "foreground", 640, 480 ),
-    oGeometry       = null,
+    oGeometry     = null,
 
-/*
-    angle = 0,
+    angle  = 0,
     mouseX = 0,
     mouseY = 0,
 
@@ -23,24 +22,29 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
     ),
 
     oBall          = new Sprite( oSpriteBall),
-    oBall2         = new Sprite( oSpriteBall),
 
-    position       = new Vector( GAME.width/3, GAME.height/3),
+    position       = new Vector( GAME.width/2, GAME.height/2),
     velocity       = new Vector( 0, 0),
     acceleration   = new Vector( 0, 0),
 
     bClick          = false,
 
-    position2       = new Vector( GAME.width/6, GAME.height/6),
-    velocity2       = new Vector( 0, 0),
-    acceleration2   = new Vector( 0, 0),
-
     oMouse         = new Vector( GAME.width/2, GAME.height/2),
-*/
+
     oNoise        = new Effect( function( R, G, B, A){
 
-        var iValue = Perlin.value( this.x ,this.y),
-            iColor = map( iValue, 0, 1, 0, 255);
+        /*
+          var iValue = Perlin.value( this.x ,this.y),
+              iColor = map( iValue, 0, 1, 0, 255);
+        */
+        var iColor = Math.round((R +  G + B)/3),
+            bruit  = map( Math.random(), 0, 1, 0, 50);
+
+        if( A < 255){
+          iColor = 255;
+        }
+
+        iColor = map( iColor + bruit, 50, 305, 0, 255);
 
         return [ iColor, iColor, iColor, 255];
     }),
@@ -55,7 +59,7 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
  |____/|_____| |_|  \___/|_|
 
  ***********************************************/
-Perlin.resolution = 50;
+    Perlin.resolution = 100;
 
     oPhase.computePhase({
 
@@ -76,6 +80,22 @@ Perlin.resolution = 50;
         draw : function( iTime ){
 
           FOREGROUND.clear();
+
+          oMouse         = new Vector( mouseX, mouseY),
+          oMouse.sub( position);
+          oMouse.magnetude = 0.2;
+
+          acceleration = oMouse;
+
+          velocity.add( acceleration)
+          position.add( velocity);
+          velocity.limit( 5);
+
+          angle = oMouse.angle;
+
+          oBall.rotAnim( FOREGROUND, position.x-16, position.y-16,angle - 225, [1]);
+
+
           oNoise.apply( FOREGROUND);
 
 
@@ -83,7 +103,7 @@ Perlin.resolution = 50;
         }
     });
 
-Timer.setCadence( 10)
+Timer.setCadence( 30)
      .run( ( iTime) => {
         oPhase.run( iTime);
       }).play();
