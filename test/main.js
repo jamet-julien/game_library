@@ -55,7 +55,7 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
  |____/|_____| |_|  \___/|_|
 
  ***********************************************/
-Perlin.resolution = 100;
+Perlin.resolution = 50;
 
     oPhase.computePhase({
 

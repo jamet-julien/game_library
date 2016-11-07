@@ -1,4 +1,4 @@
-import { contrain, shuffle}  from '../lib/utility.js';
+import {  shuffle }  from '../lib/utility.js';
 
 
 class Perlin{
@@ -6,9 +6,11 @@ class Perlin{
 
   constructor(){
 
-      var iUnit       = 1.74,
-          i           = 0;
-      this.res = 50;
+      var iUnit = 1.74,
+          i     = 0;//;
+
+        this.res = 50;
+        this.permutable = [];
 
       this.perm = [151,160,137,91,90,15,131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,
         142,8,99,37,240,21,10,23,190,6,148,247,120,234,75,0,26,197,62,94,252,219,
@@ -24,24 +26,33 @@ class Perlin{
         127,4,150,254,138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,
         156,180];
 
-      shuffle( this.perm);
+        for(; i < 511; i++){
+          this.permutable.push( this.perm[ i % 255]);
+        }
+
+      shuffle( this.permutable);
 
 
-      this.gradient = [
-        [ iUnit , iUnit],
-        [ -iUnit, iUnit],
-        [ iUnit , -iUnit],
-        [ -iUnit, -iUnit],
-        [ 1     , 1],
-        [ -1    , 1],
-        [ 1     , -1],
-        [ -1    , -1]
+      this.vecteur = [
+        [ iUnit  , iUnit],
+        [ -iUnit , iUnit],
+        [ iUnit  , -iUnit],
+        [ -iUnit , -iUnit],
+        [ 1      , 1],
+        [ -1     , 1],
+        [ 1      , -1],
+        [ -1     , -1]
       ];
 
   }
 
+/**
+ * [resolution description]
+ * @param  {[type]} iValue [description]
+ * @return {[type]}        [description]
+ */
   set resolution( iValue){
-    this.res = contrain( iValue, 30, 600);
+    this.res = iValue;//contrain( iValue, 30, 600);
   }
 
   /**
@@ -49,7 +60,7 @@ class Perlin{
    */
   value( iX, iY){
 
-    var iMask, jMask, x0, y0, vecteurA, vecteurB, vecteurC, vecteurD, tempX, tempY;
+    var iMask, jMask, x0, y0, indexA, indexB, indexC, indexD, tempX, tempY;
     var s, t, u, v;
     var tmp, cx, cy, li1, li2;
 
@@ -61,39 +72,40 @@ class Perlin{
     y0 = Math.floor( iY);
 
     //masquage
-    iMask = x0 & 255;
-    jMask = y0 & 255;
+    iMask = x0 % 511;
+    jMask = y0 % 511;
 
-    //vecteur
-    vecteurA = this.perm[ iMask + this.perm[ jMask]] % 8;
-    vecteurB = this.perm[ iMask + 1 + this.perm[ jMask]] % 8;
-    vecteurC = this.perm[ iMask + this.perm[ jMask + 1 ]] % 8;
-    vecteurD = this.perm[ iMask + 1 + this.perm[ jMask + 1 ]] % 8;
+    //index au angle
+    indexA = this.permutable[ iMask + this.permutable[ jMask]] % 8;
+    indexB = this.permutable[ iMask + 1 + this.permutable[ jMask]] % 8;
+    indexC = this.permutable[ iMask + this.permutable[ jMask + 1 ]] % 8;
+    indexD = this.permutable[ iMask + 1 + this.permutable[ jMask + 1 ]] % 8;
 
     tempX = iX - x0;
     tempY = iY - y0;
-    s = this.gradient[ vecteurA][0] * tempX + this.gradient[ vecteurA][1] * tempY;
+    s     = this.vecteur[ indexA][0] * tempX + this.vecteur[ indexA][1] * tempY;
 
     tempX = iX - (x0 + 1);
     tempY = iY - y0;
-    t = this.gradient[ vecteurB][0] * tempX + this.gradient[ vecteurB][1] * tempY;
+    t     = this.vecteur[ indexB][0] * tempX + this.vecteur[ indexB][1] * tempY;
 
     tempX = iX - x0;
     tempY = iY - (y0 + 1);
-    u = this.gradient[ vecteurC][0] * tempX + this.gradient[ vecteurC][1] * tempY;
+    u     = this.vecteur[ indexC][0] * tempX + this.vecteur[ indexC][1] * tempY;
 
     tempX = iX - (x0 + 1);
     tempY = iY - (y0 + 1);
-    v = this.gradient[ vecteurD][0] * tempX + this.gradient[ vecteurD][1] * tempY;
+    v     = this.vecteur[ indexD][0] * tempX + this.vecteur[ indexD][1] * tempY;
 
+    //interpolation
     tmp = iX - x0;
-    cx  = 3 * tmp * tmp - 2 * tmp * tmp * tmp;
+    cx  = (3 * tmp * tmp) - (2 * tmp * tmp * tmp);
+
+    tmp = iY - y0;
+    cy  = (3 * tmp * tmp) - (2 * tmp * tmp * tmp);
 
     li1 = s + cx * ( t - s);
     li2 = u + cx * ( v - u);
-
-    tmp = iY - y0;
-    cy  = 3 * tmp * tmp - 2 * tmp * tmp * tmp;
 
     return li1 + cy * ( li2 - li1);
 
