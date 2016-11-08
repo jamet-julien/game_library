@@ -12,6 +12,9 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
     FOREGROUND    = new Canvas( "foreground", 640, 480 ),
     oGeometry     = null,
     handleMove    = null,
+    handleClick   = null,
+    handleDrag    = null,
+    handleUp      = null,
 
     angle  = 0,
     mouseX = 0,
@@ -27,6 +30,7 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
     position       = new Vector( GAME.width/2, GAME.height/2),
     velocity       = new Vector( 0, 0),
     acceleration   = new Vector( 0, 0),
+    rec            = new Vector( 20, 20),
 
     bClick          = false,
 
@@ -70,6 +74,8 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
           GAME.init();
           FOREGROUND.init();
 
+          oGeometry = new Geometry( FOREGROUND);
+
           Timer.restart();
 
           this.setPhase( 'draw');
@@ -97,8 +103,11 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
           oBall.rotAnim( FOREGROUND, position.x-16, position.y-16,angle - 225, [1]);
 
 
+
           oNoise.apply( FOREGROUND);
 
+          oGeometry.rectangle( rec.x, rec.y, 32, 32)
+                   .stroke('red', 1);
 
 
         }
@@ -120,10 +129,44 @@ Timer.setCadence( 30)
 handleMove = eventHandler( 'mousemove', {
   element  : document.getElementById('foreground'),
   callBack : function( e){
-    
+
     mouseX = e.pageX - this.offsetLeft;
     mouseY = e.pageY - this.offsetTop;
-    
+
+  }
+});
+
+handleClick = eventHandler( 'mousedown', {
+  element  : document.getElementById('foreground'),
+  list     : [ rec],
+  criteria : function( e){
+    return (e.x) <= mouseX && (e.y) <= mouseY &&
+           (e.x+32) >= mouseX && (e.y+32) >= mouseY;
+  },
+  callBack : function( e){
+
+    handleDrag = eventHandler( 'mousemove', {
+      element  : document.getElementById('foreground'),
+      callBack : function( e){
+
+        rec.x = mouseX - 16 ;
+        rec.y = mouseY - 16 ;
+
+      }
+    });
+  }
+});
+
+handleUp = eventHandler( 'mouseup', {
+  element  : document.getElementById('foreground'),
+  list     : [ rec],
+  criteria : function( e){
+    return (e.x) <= mouseX && (e.y) <= mouseY &&
+           (e.x+32) >= mouseX && (e.y+32) >= mouseY;
+  },
+  callBack : function( e){
+
+    handleDrag.destroy();
   }
 });
 

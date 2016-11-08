@@ -1,12 +1,13 @@
 
 function eventHandler( sEventName, oParam) {
 
-  var element     = oParam.element || document.documentElement,
+  var element     = oParam.element    || document.documentElement,
       bUseCapture = oParam.useCapture || false,
+      aList       = oParam.list       || [],
       fDefault    = function( e){ return true;},
       _handler;
 
-  function _delegate( fCriteria) {
+  function _delegateDom( fCriteria) {
 
       _handler = function ( e) {
         var el = e.target;
@@ -27,14 +28,43 @@ function eventHandler( sEventName, oParam) {
       return _handler;
   }
 
-  _handler = _delegate( oParam.criteria || fDefault);
+  function _delegateList( fCriteria) {
+
+      _handler = function ( e) {
+
+        var i  = aList.length - 1;
+
+        for( ; i >= 0; i-- ){
+
+          if ( !fCriteria.call( this, aList[ i ])) continue;
+
+          e.delegateTarget = aList[ i ];
+
+          if (typeof oParam.callBack === 'function') {
+            oParam.callBack.apply( this, arguments);
+          }
+
+          break;
+        }
+      };
+
+      return _handler;
+  }
+
+  _handler = aList.length ?
+                      _delegateList( oParam.criteria || fDefault):
+                      _delegateDom(  oParam.criteria || fDefault);
+
+  _handler.addElement = function( element){
+    aList.push( element);
+  };
 
   _handler.destroy = function () {
     return element.removeEventListener( sEventName, _handler, bUseCapture);
   };
 
   element.addEventListener( sEventName, _handler, bUseCapture);
-  
+
   return _handler;
 }
 
