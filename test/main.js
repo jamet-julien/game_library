@@ -11,6 +11,7 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
     GAME          = new Canvas( "game", 640, 480 ),
     FOREGROUND    = new Canvas( "foreground", 640, 480 ),
     oGeometry     = null,
+    handleMove    = null,
 
     angle  = 0,
     mouseX = 0,
@@ -116,9 +117,14 @@ Timer.setCadence( 30)
  |____/ |_/_/   \_\_| \_\|_|
 
 ****************************************/
-document.getElementById('foreground').addEventListener("mousemove", function( e){
-  mouseX = e.pageX - this.offsetLeft;
-  mouseY = e.pageY - this.offsetTop;
+handleMove = eventHandler( 'mousemove', {
+  element  : document.getElementById('foreground'),
+  callBack : function( e){
+    
+    mouseX = e.pageX - this.offsetLeft;
+    mouseY = e.pageY - this.offsetTop;
+    
+  }
 });
 
 document.onreadystatechange=function () {
