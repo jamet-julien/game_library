@@ -9,6 +9,9 @@ class Geometry{
     this.begin   = false;
   }
 
+
+
+
   /**
    *
    */
@@ -23,6 +26,15 @@ class Geometry{
     }
 
     return this;
+  }
+
+  /**
+   * [font description]
+   * @param  {[type]} sString [description]
+   * @return {[type]}         [description]
+   */
+  set font( sString){
+    this.context.font = sString;
   }
 
   /**
@@ -42,6 +54,14 @@ class Geometry{
   moveTo( iX, iY){
       this.context.moveTo( iX, iY);
       return this;
+  }
+
+  /**
+   *
+   */
+  fillText( sString, x, y){
+    this.context.fillText(  sString, x, y);
+    return this;
   }
 
   /**
@@ -129,7 +149,7 @@ class Geometry{
   /**
    *
    */
-  line( iX, iY, iX2, iY2){
+  line( iX, iY, iX2, iY2, icolor){
 
     this.beginPath()
         .moveTo( iX, iY)
@@ -137,7 +157,7 @@ class Geometry{
 
     this.closePath();
 
-    this.stroke( '#000', 1);
+    this.stroke( icolor, 1);
 
     return this;
 
@@ -156,6 +176,27 @@ class Geometry{
   lineTo( iX, iY){
       this.context.lineTo( iX, iY);
       return this;
+  }
+
+
+  save(){
+    this.context.save();
+    return this;
+  }
+
+  restore(){
+    this.context.restore();
+    return this;
+  }
+
+  rotate( iAngle){
+    this.context.rotate( iAngle);
+    return this;
+  }
+
+  translate( iX, iY){
+    this.context.translate( iX, iY);
+    return this;
   }
 
 }

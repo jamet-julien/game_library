@@ -42,7 +42,7 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
           var iValue = Perlin.value( this.x ,this.y),
               iColor = map( iValue, 0, 1, 0, 255);
         */
-        var iColor = Math.round((R +  G + B)/3),
+        var iColor = Math.round( ( R +  G + B) / 3),
             bruit  = map( Math.random(), 0, 1, 0, 50);
 
         if( A < 255){
@@ -102,12 +102,12 @@ var BACKGROUND    = new Canvas( "background", 640, 480 ),
 
           oBall.rotAnim( FOREGROUND, position.x-16, position.y-16,angle - 225, [1]);
 
+          oGeometry.rectangle( rec.x, rec.y, 32, 32)
+                   .stroke('red', 5);
 
 
           oNoise.apply( FOREGROUND);
 
-          oGeometry.rectangle( rec.x, rec.y, 32, 32)
-                   .stroke('red', 1);
 
 
         }

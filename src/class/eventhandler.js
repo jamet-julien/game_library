@@ -4,11 +4,11 @@ function eventHandler( sEventName, oParam) {
   var element     = oParam.element    || document.documentElement,
       bUseCapture = oParam.useCapture || false,
       aList       = oParam.list       || [],
+      useArray    = oParam.array      || false,
       fDefault    = function( e){ return true;},
       _handler;
 
   function _delegateDom( fCriteria) {
-
       _handler = function ( e) {
         var el = e.target;
         do {
@@ -29,7 +29,6 @@ function eventHandler( sEventName, oParam) {
   }
 
   function _delegateList( fCriteria) {
-
       _handler = function ( e) {
 
         var i  = aList.length - 1;
@@ -51,7 +50,7 @@ function eventHandler( sEventName, oParam) {
       return _handler;
   }
 
-  _handler = aList.length ?
+  _handler = useArray ?
                       _delegateList( oParam.criteria || fDefault):
                       _delegateDom(  oParam.criteria || fDefault);
 
