@@ -8,7 +8,12 @@ import Effect          from '../class/effect.js';
 import Geometry        from '../class/geometry.js';
 import Perlin          from '../class/perlin.js';
 import eventHandler    from '../class/eventhandler.js';
-import {contrain, map} from './utility.js';
+import {indexToXY,
+XYToIndex,
+dedoublon,
+contrain,
+map,
+shuffle} from './utility.js';
 
 
 (function( context){
@@ -22,8 +27,12 @@ import {contrain, map} from './utility.js';
     context.Vector       = Vector;
     context.Geometry     = Geometry;
     context.Perlin       = Perlin;
+    context.indexToXY    = indexToXY;
+    context.XYToIndex    = XYToIndex;
+    context.dedoublon    = dedoublon;
     context.contrain     = contrain;
     context.map          = map;
+    context.shuffle      = shuffle;
     context.eventHandler = eventHandler;
 
 })( window);
