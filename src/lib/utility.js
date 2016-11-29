@@ -15,9 +15,8 @@ export function dedoublon( aArray){
   return aArray.filter(function(item, pos) {
       return aArray.indexOf(item) == pos;
   });
-  
-}
 
+}
 
 export function contrain( iValue, iMin, iMax)
 {
