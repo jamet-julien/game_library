@@ -6,7 +6,7 @@ import Timer           from '../class/timer.js';
 import Vector          from '../class/vector.js';
 import Effect          from '../class/effect.js';
 import Geometry        from '../class/geometry.js';
-import Perlin          from '../class/Perlin.js';
+import Perlin          from '../class/perlin.js';
 import eventHandler    from '../class/eventhandler.js';
 import {contrain, map} from './utility.js';
 
