@@ -1,4 +1,8 @@
-
+/*!
+ * Auteur: Julien Jamet (https://github.com/jamet-julien)
+ *
+ * Date: 2016-11-01
+ */
 
 class Canvas {
 
@@ -53,14 +57,17 @@ class Canvas {
    */
   setMode( _sMode){
 
-    /* globalCompositeOperation :
-      normal | multiply | screen | overlay |
-      darken | lighten | color-dodge | color-burn | hard-light |
-      soft-light | difference | exclusion | hue | saturation |
-      color | luminosity
-    */
     var sMode = _sMode ||'normal';
     this.context.globalCompositeOperation = sMode;
+  }
+
+  /**
+   *
+   */
+  setOpacity( _iNum){
+
+    var iNum = _iNum || 1;
+    this.context.globalAlpha = iNum;
   }
 
   /**
